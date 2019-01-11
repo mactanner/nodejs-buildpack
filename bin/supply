@@ -28,6 +28,7 @@ mkdir -p "$BUILD_DIR/.profile.d"
 echo "export PATH=\"\$HOME/vendor/ffmpeg/bin:\$PATH\";" >> "$BUILD_DIR/.profile.d/ffmpeg.sh"
 echo "export PATH=\"\$HOME/vendor/ghostscript/bin:\$PATH\";" >> "$BUILD_DIR/.profile.d/ghostscript.sh"
 
+whoami
 cp $BP_DIR/vendor/imagemagick-policy.xml /etc/ImageMagick-6/policy.xml
 
 $output_dir/supply "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" "$DEPS_IDX"
