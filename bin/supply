@@ -15,4 +15,17 @@ pushd $BUILDPACK_DIR
 GOROOT=$GoInstallDir/go $GoInstallDir/go/bin/go build -o $output_dir/supply ./src/nodejs/supply/cli
 popd
 
+# Add ffmpeg / ghostscript binaries and libraries to path
+echo "-----> Installing ffmpeg and ghostscript"
+
+BP_DIR=$(cd $(dirname $0); cd ..; pwd)
+
+mkdir -p "$BUILD_DIR/vendor/"
+tar xzf $BP_DIR/vendor/ffmpeg.tar.gz -C $BUILD_DIR/vendor/
+tar xzf $BP_DIR/vendor/ghostscript.tar.gz -C $BUILD_DIR/vendor/
+
+mkdir -p "$BUILD_DIR/.profile.d"
+echo "export PATH=\"\$HOME/vendor/ffmpeg/bin:\$PATH\";" >> "$BUILD_DIR/.profile.d/ffmpeg.sh"
+echo "export PATH=\"\$HOME/vendor/ghostscript/bin:\$PATH\";" >> "$BUILD_DIR/.profile.d/ghostscript.sh"
+
 $output_dir/supply "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" "$DEPS_IDX"
